@@ -2,7 +2,7 @@
 A responsive, multi-page personal portfolio website built from scratch to showcase my professional work, projects, and technical skills. This project demonstrates my proficiency in front-end web development and serves as a central hub for my online professional presence.
 ## 🎯 Project Overview
 This portfolio website was created to provide a comprehensive view of my skills, experience, and projects in a clean, professional format. The site features a modern design with intuitive navigation and is fully responsive across all device sizes.
-Live Site: https://rhit-Yoob.github.io
+
 ## 💡 Purpose & Goals
 The primary goals of this project were to:
 
