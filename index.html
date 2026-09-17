@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brian Yoo — Systems, Cloud & Security</title>
+  <title>Brian Yoo — Systems, Cloud & Security Engineering</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Newsreader (Editorial Serif), Inter (Sans), JetBrains Mono (Code/Technical) -->
+  <!-- Google Fonts: Newsreader (Editorial Serif), Inter (Clean Sans), JetBrains Mono (Technical Engine) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -25,14 +25,14 @@
           },
           colors: {
             paper: '#faf9f6',
-            ink: '#1c1917',
+            ink: '#181614',
             muted: '#78716c',
-            border: '#e7e5e4',
-            chip: '#f5f5f4',
-            darkBg: '#0e1015',
-            darkCard: '#151821',
-            darkBorder: '#232838',
-            darkText: '#e2e8f0',
+            border: '#e5e2dc',
+            chip: '#f3f1ec',
+            darkBg: '#0b0d11',
+            darkCard: '#131720',
+            darkBorder: '#212636',
+            darkText: '#f1f5f9',
             darkMuted: '#94a3b8'
           }
         }
@@ -45,177 +45,238 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* 3D Card Hover Setup */
-    .tilt-card {
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      transition: transform 0.15s ease-out, box-shadow 0.2s ease, border-color 0.2s ease;
+    /* Interactive 3D Card Setup */
+    .pro-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.7);
+      transition: transform 0.15s ease-out, border-color 0.2s ease, box-shadow 0.2s ease;
+      will-change: transform;
+    }
+    .dark .pro-card {
+      background: rgba(19, 23, 32, 0.75);
     }
 
-    /* Accordion Expand Animation */
+    /* Accordion Dropdown Animation */
     .drawer-content {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
       opacity: 0;
     }
     .drawer-content.open {
-      max-height: 400px;
+      max-height: 500px;
       opacity: 1;
     }
 
+    /* Category Filtering Transitions */
     .project-card {
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
     .project-card.hiding {
       opacity: 0;
-      transform: scale(0.97);
+      transform: scale(0.98);
       pointer-events: none;
     }
   </style>
 </head>
 
-<body class="bg-paper text-ink dark:bg-darkBg dark:text-darkText font-sans antialiased selection:bg-stone-200 dark:selection:bg-slate-800">
+<body class="bg-paper text-ink dark:bg-darkBg dark:text-darkText font-sans antialiased selection:bg-stone-300 dark:selection:bg-slate-700">
 
-  <!-- Minimal Top Bar -->
-  <nav class="max-w-3xl mx-auto px-6 pt-10 pb-4 flex items-center justify-between text-xs font-mono text-muted dark:text-darkMuted">
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-      <span id="local-time">Terre Haute, IN (Loading...)</span>
-    </div>
+  <!-- Top Navigation & Live Telemetry Bar -->
+  <nav class="max-w-6xl mx-auto px-6 sm:px-10 pt-10 pb-6 flex items-center justify-between text-sm font-mono text-muted dark:text-darkMuted border-b border-border/80 dark:border-darkBorder">
     <div class="flex items-center gap-3">
-      <button id="theme-toggle" class="hover:text-ink dark:hover:text-white transition flex items-center gap-1.5 py-1 px-2.5 rounded border border-border dark:border-darkBorder bg-white/50 dark:bg-darkCard/50">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span id="local-time" class="tracking-tight">Terre Haute, IN (Loading...)</span>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a href="https://github.com/rhit-Yoob" target="_blank" class="hover:text-ink dark:hover:text-white transition hidden sm:inline">github ↗</a>
+      <a href="https://www.linkedin.com/in/brian-yoo-422a2b288" target="_blank" class="hover:text-ink dark:hover:text-white transition hidden sm:inline">linkedin ↗</a>
+      <button id="theme-toggle" class="hover:text-ink dark:hover:text-white transition flex items-center gap-2 py-1.5 px-3.5 rounded-lg border border-border dark:border-darkBorder bg-white/60 dark:bg-darkCard/80 shadow-xs">
         <span id="theme-icon">◐</span>
         <span id="theme-text">theme</span>
       </button>
     </div>
   </nav>
 
-  <main class="max-w-3xl mx-auto px-6 pb-24 space-y-16">
+  <main class="max-w-6xl mx-auto px-6 sm:px-10 py-12 sm:py-16 space-y-20">
 
-    <!-- Header Section -->
-    <header class="space-y-4">
-      <div class="space-y-1">
-        <h1 class="text-3xl sm:text-4xl font-serif font-normal tracking-tight text-ink dark:text-white">
+    <!-- Hero Identity Section -->
+    <header class="space-y-6 max-w-4xl">
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono bg-stone-200/70 dark:bg-darkCard text-stone-700 dark:text-darkMuted border border-stone-300 dark:border-darkBorder">
+          Target: IT Operations • Linux Systems Administration • Cloud & DevOps
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-serif font-normal tracking-tight text-ink dark:text-white">
           Brian Yoo
         </h1>
-        <div class="text-xs font-mono text-muted dark:text-darkMuted space-x-2">
+        <div class="text-base sm:text-lg font-mono text-muted dark:text-darkMuted space-x-2">
           <span>Pleasanton, CA / Terre Haute, IN</span>
           <span>•</span>
           <span>(925) 701-1180</span>
         </div>
       </div>
 
-      <p class="text-[15px] leading-relaxed text-stone-700 dark:text-slate-300">
+      <p class="text-lg sm:text-xl leading-relaxed text-stone-700 dark:text-slate-300 font-light">
         Computer Science student and Cybersecurity minor at <span class="text-ink dark:text-white font-medium">Rose-Hulman Institute of Technology</span>. 
-        Focusing on Linux systems administration, automated multi-cloud infrastructure across AWS and Azure, container orchestration, and practical enterprise cybersecurity.
+        Focusing on bare-metal Linux systems administration, automated multi-cloud infrastructure across AWS and Azure, container orchestration, and healthcare compliance security.
       </p>
 
-      <!-- Interactive Contact Row -->
-      <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-stone-600 dark:text-darkMuted pt-1">
-        <a href="https://github.com/rhit-Yoob" target="_blank" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-700 transition">
-          github <span class="text-[10px]">↗</span>
+      <!-- Interactive Contact Badges -->
+      <div class="flex flex-wrap items-center gap-4 text-sm font-mono text-stone-700 dark:text-darkMuted pt-2">
+        <a href="https://github.com/rhit-Yoob" target="_blank" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-600 transition">
+          github profile ↗
         </a>
-        <a href="https://www.linkedin.com/in/brian-yoo-422a2b288" target="_blank" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-700 transition">
-          linkedin <span class="text-[10px]">↗</span>
+        <a href="https://www.linkedin.com/in/brian-yoo-422a2b288" target="_blank" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-600 transition">
+          linkedin profile ↗
         </a>
-        <button id="copy-email-btn" onclick="copyEmail()" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-700 transition flex items-center gap-1">
-          <span id="email-label">email</span> <span class="text-[10px]">↗</span>
+        <button id="copy-email-btn" onclick="copyEmail()" class="hover:text-ink dark:hover:text-white underline underline-offset-4 decoration-stone-300 dark:decoration-slate-600 transition flex items-center gap-1.5 cursor-pointer">
+          <span id="email-label">copy email</span> ↗
         </button>
         <span class="text-stone-300 dark:text-slate-700">|</span>
-        <span class="text-xs text-muted dark:text-darkMuted">iBrianyoo@gmail.com</span>
+        <span class="text-muted dark:text-darkMuted">iBrianyoo@gmail.com</span>
       </div>
     </header>
 
-    <!-- Experience Section (Interactive Bento Cards) -->
-    <section class="space-y-6">
-      <div class="border-b border-border dark:border-darkBorder pb-2 flex items-baseline justify-between">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-muted dark:text-darkMuted">Experience</h2>
-        <span class="text-[11px] font-mono text-muted dark:text-darkMuted">Click card for technical details</span>
+    <!-- Industry Certifications Banner -->
+    <section class="space-y-4">
+      <div class="flex items-baseline justify-between border-b border-border dark:border-darkBorder pb-2">
+        <h2 class="text-xs sm:text-sm font-mono uppercase tracking-widest text-muted dark:text-darkMuted font-semibold">Certifications & Credentials</h2>
+        <a href="https://github.com/rhit-Yoob/Certificates" target="_blank" class="text-xs sm:text-sm font-mono text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white transition">
+          view repository ↗
+        </a>
       </div>
 
-      <div class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder shadow-xs space-y-2">
+          <div class="flex justify-between items-center text-xs font-mono text-emerald-700 dark:text-emerald-400 font-medium">
+            <span>Verified Credential</span>
+            <span>Active</span>
+          </div>
+          <div class="text-base sm:text-lg font-bold text-ink dark:text-white">CompTIA A+</div>
+          <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400">Core hardware break-fix, OS troubleshooting, memory diagnostics, and network configuration.</p>
+        </div>
+
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder shadow-xs space-y-2">
+          <div class="flex justify-between items-center text-xs font-mono text-emerald-700 dark:text-emerald-400 font-medium">
+            <span>Verified Credential</span>
+            <span>Jan 2026</span>
+          </div>
+          <div class="text-base sm:text-lg font-bold text-ink dark:text-white">AWS Cloud Practitioner</div>
+          <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400">Cloud architecture patterns, AWS services (EC2/S3/VPC/IAM), shared responsibility, and billing.</p>
+        </div>
+
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder shadow-xs space-y-2">
+          <div class="flex justify-between items-center text-xs font-mono text-emerald-700 dark:text-emerald-400 font-medium">
+            <span>Verified Credential</span>
+            <span>Sep 2025</span>
+          </div>
+          <div class="text-base sm:text-lg font-bold text-ink dark:text-white">Google Cybersecurity</div>
+          <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400">SIEM event analysis, packet capture diagnosis, intrusion mitigation, and incident handling.</p>
+        </div>
+
+        <div class="pro-card rounded-2xl p-5 border border-amber-300/80 dark:border-amber-900/60 bg-amber-50/20 dark:bg-amber-950/20 shadow-xs space-y-2">
+          <div class="flex justify-between items-center text-xs font-mono text-amber-800 dark:text-amber-300 font-medium">
+            <span>Examination Target</span>
+            <span class="animate-pulse">In Progress</span>
+          </div>
+          <div class="text-base sm:text-lg font-bold text-ink dark:text-white">CompTIA Network+</div>
+          <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400">Advanced subnetting, routing tables, OSI model segregation, VLAN switches, and firewall rules.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Engineering & Work Experience (Interactive Cards) -->
+    <section class="space-y-6">
+      <div class="border-b border-border dark:border-darkBorder pb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+        <h2 class="text-xs sm:text-sm font-mono uppercase tracking-widest text-muted dark:text-darkMuted font-semibold">Professional & Academic Experience</h2>
+        <span class="text-xs font-mono text-muted dark:text-darkMuted">Click card to expand technical scope</span>
+      </div>
+
+      <div class="space-y-5">
         
         <!-- Role 1: CSSE -->
-        <article class="tilt-card cursor-pointer rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-csse')">
+        <article class="pro-card cursor-pointer rounded-2xl p-6 sm:p-7 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-csse')">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <h3 class="text-[15px] font-medium text-ink dark:text-white">
+            <h3 class="text-lg sm:text-xl font-medium text-ink dark:text-white">
               Rose-Hulman CSSE Department
-              <span class="text-xs font-serif italic text-muted dark:text-darkMuted">— Systems & DevOps Assistant</span>
+              <span class="text-sm sm:text-base font-serif italic text-muted dark:text-darkMuted">— Systems & DevOps Assistant</span>
             </h3>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">Sep 2026 – Present</span>
+            <span class="text-xs sm:text-sm font-mono text-muted dark:text-darkMuted">Sep 2026 – Present</span>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
-            Administer and maintain Linux virtual machines hosting course-critical academic applications, ensuring high system uptime. Containerize legacy services with Docker and manage deployments across Kubernetes clusters.
+          <p class="text-sm sm:text-base text-stone-600 dark:text-slate-400 mt-3 leading-relaxed">
+            Administer and maintain Linux virtual machines hosting course-critical academic applications, ensuring system availability. Containerize legacy departmental applications with Docker and orchestrate deployments across Kubernetes clusters.
           </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Linux VMs</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Docker</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Kubernetes</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Patching</span>
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-4">
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Linux VM Administration</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Docker Containers</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Kubernetes</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Security Patching</span>
           </div>
 
-          <!-- Expanding Technical Log Drawer -->
-          <div id="drawer-csse" class="drawer-content pt-0 border-t border-dashed border-stone-200 dark:border-darkBorder/60 mt-3">
-            <div class="pt-3 text-xs text-stone-600 dark:text-slate-400 space-y-1.5 font-mono">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Operations Log</div>
-              <p>• Automated routine vulnerability scans, dependency updates, and patch verification across department servers.</p>
-              <p>• Migrated manual application setups into declarative Docker compose specifications for faster disaster recovery.</p>
+          <div id="drawer-csse" class="drawer-content border-t border-dashed border-stone-200 dark:border-darkBorder/80 mt-4 pt-0">
+            <div class="pt-4 text-xs sm:text-sm text-stone-600 dark:text-slate-400 space-y-2 font-mono">
+              <div class="text-xs font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Operational Systems Scope</div>
+              <p>• Execute regular security patch updates, dependency upgrades, and vulnerability checks across departmental servers.</p>
+              <p>• Maintain high uptime standards across academic terms, diagnosing system bottlenecks and network connectivity failures.</p>
             </div>
           </div>
         </article>
 
         <!-- Role 2: 609 Health -->
-        <article class="tilt-card cursor-pointer rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-609')">
+        <article class="pro-card cursor-pointer rounded-2xl p-6 sm:p-7 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-609')">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <h3 class="text-[15px] font-medium text-ink dark:text-white">
+            <h3 class="text-lg sm:text-xl font-medium text-ink dark:text-white">
               609 Health
-              <span class="text-xs font-serif italic text-muted dark:text-darkMuted">— Systems Architect & DevOps Lead (Senior Capstone)</span>
+              <span class="text-sm sm:text-base font-serif italic text-muted dark:text-darkMuted">— Systems Architect & DevOps Lead (Senior Capstone)</span>
             </h3>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">Sep 2026 – Present</span>
+            <span class="text-xs sm:text-sm font-mono text-muted dark:text-darkMuted">Sep 2026 – Present</span>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
+          <p class="text-sm sm:text-base text-stone-600 dark:text-slate-400 mt-3 leading-relaxed">
             Architect backend database systems (PostgreSQL, Python) and deployment workflows for an eligibility intelligence engine. Enforce role-based access control (RBAC), audit logging, and release verification standards to protect healthcare data workflows.
           </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">FastAPI</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">PostgreSQL</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">RBAC Security</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Release Gates</span>
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-4">
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">FastAPI</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">PostgreSQL</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">RBAC Governance</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Release Verification</span>
           </div>
 
-          <div id="drawer-609" class="drawer-content pt-0 border-t border-dashed border-stone-200 dark:border-darkBorder/60 mt-3">
-            <div class="pt-3 text-xs text-stone-600 dark:text-slate-400 space-y-1.5 font-mono">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Architecture Scope</div>
+          <div id="drawer-609" class="drawer-content border-t border-dashed border-stone-200 dark:border-darkBorder/80 mt-4 pt-0">
+            <div class="pt-4 text-xs sm:text-sm text-stone-600 dark:text-slate-400 space-y-2 font-mono">
+              <div class="text-xs font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Engineering Architecture Details</div>
               <p>• Serve as technical release lead, establishing testing verification gates across development iterations prior to client demos.</p>
-              <p>• Engineered schema models to support entity-resolution across disparate healthcare provider registries and claims data.</p>
+              <p>• Co-architect schema models to resolve entity mismatches across fragmented healthcare registries, EHRs, and payer programs.</p>
             </div>
           </div>
         </article>
 
         <!-- Role 3: ISSI -->
-        <article class="tilt-card cursor-pointer rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-issi')">
+        <article class="pro-card cursor-pointer rounded-2xl p-6 sm:p-7 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" onclick="toggleDrawer('drawer-issi')">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <h3 class="text-[15px] font-medium text-ink dark:text-white">
+            <h3 class="text-lg sm:text-xl font-medium text-ink dark:text-white">
               Integrated Silicon Solutions, Inc. (ISSI)
-              <span class="text-xs font-serif italic text-muted dark:text-darkMuted">— Application Engineering Intern</span>
+              <span class="text-sm sm:text-base font-serif italic text-muted dark:text-darkMuted">— Application Engineering Intern</span>
             </h3>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">Jun 2024 – Aug 2024</span>
+            <span class="text-xs sm:text-sm font-mono text-muted dark:text-darkMuted">Jun 2024 – Aug 2024</span>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
+          <p class="text-sm sm:text-base text-stone-600 dark:text-slate-400 mt-3 leading-relaxed">
             Conducted hardware validation, bench testing, and fault isolation across motherboards and DRAM modules under variable loads. Captured and analyzed signal waveforms using oscilloscopes to diagnose anomalies and support data-driven fixes.
           </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Hardware Diagnostics</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">DRAM Testing</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Signal Analysis</span>
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-4">
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Hardware Diagnostics</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">DRAM Testing</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Oscilloscope Analysis</span>
+            <span class="bg-chip dark:bg-darkBg px-2.5 py-1 rounded-md border border-border dark:border-darkBorder">Test Workflows</span>
           </div>
 
-          <div id="drawer-issi" class="drawer-content pt-0 border-t border-dashed border-stone-200 dark:border-darkBorder/60 mt-3">
-            <div class="pt-3 text-xs text-stone-600 dark:text-slate-400 space-y-1.5 font-mono">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Hardware Testing Summary</div>
-              <p>• Documented hardware troubleshooting workflows, test bed setups, and diagnostic findings for engineering team reviews.</p>
-              <p>• Verified signal integrity across high-speed digital buses under thermal variations and electrical load shifts.</p>
+          <div id="drawer-issi" class="drawer-content border-t border-dashed border-stone-200 dark:border-darkBorder/80 mt-4 pt-0">
+            <div class="pt-4 text-xs sm:text-sm text-stone-600 dark:text-slate-400 space-y-2 font-mono">
+              <div class="text-xs font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Diagnostics & Test Engineering</div>
+              <p>• Documented troubleshooting workflows, test configurations, and diagnostic findings for engineering team reviews.</p>
+              <p>• Evaluated signal integrity across bus architectures to prevent hardware degradation under sustained stress environments.</p>
             </div>
           </div>
         </article>
@@ -223,34 +284,36 @@
       </div>
     </section>
 
-    <!-- Projects Section with Filtering & 3D Cards -->
+    <!-- Projects & Infrastructure Labs (Bento Grid with Filter) -->
     <section class="space-y-6">
-      <div class="border-b border-border dark:border-darkBorder pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-muted dark:text-darkMuted">Projects & Labs</h2>
+      <div class="border-b border-border dark:border-darkBorder pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h2 class="text-xs sm:text-sm font-mono uppercase tracking-widest text-muted dark:text-darkMuted font-semibold">Featured Projects & Technical Labs</h2>
         
-        <!-- Filter Toggle Tabs -->
-        <div class="flex items-center gap-1.5 text-[11px] font-mono p-1 rounded-lg bg-stone-200/50 dark:bg-darkCard/80 border border-border dark:border-darkBorder">
-          <button onclick="filterProjects('all')" class="filter-btn px-2.5 py-0.5 rounded transition font-medium bg-white dark:bg-slate-700 text-ink dark:text-white shadow-xs" data-filter="all">All</button>
-          <button onclick="filterProjects('infra')" class="filter-btn px-2.5 py-0.5 rounded transition text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white" data-filter="infra">Infrastructure</button>
-          <button onclick="filterProjects('software')" class="filter-btn px-2.5 py-0.5 rounded transition text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white" data-filter="software">Software</button>
+        <!-- Category Filter Buttons -->
+        <div class="flex items-center gap-1.5 text-xs font-mono p-1 rounded-lg bg-stone-200/60 dark:bg-darkCard border border-border dark:border-darkBorder">
+          <button onclick="filterProjects('all')" class="filter-btn px-3 py-1 rounded-md transition font-medium bg-white dark:bg-slate-700 text-ink dark:text-white shadow-xs" data-filter="all">All</button>
+          <button onclick="filterProjects('infra')" class="filter-btn px-3 py-1 rounded-md transition text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white" data-filter="infra">Infrastructure</button>
+          <button onclick="filterProjects('software')" class="filter-btn px-3 py-1 rounded-md transition text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white" data-filter="software">Software</button>
         </div>
       </div>
 
-      <div id="projects-container" class="space-y-4">
+      <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-        <!-- Debian Home Lab -->
-        <article class="project-card tilt-card rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" data-category="infra">
-          <div class="flex items-baseline justify-between">
-            <a href="https://github.com/rhit-Yoob/Home-Lab" target="_blank" class="text-[15px] font-medium text-ink dark:text-white hover:underline flex items-center gap-1 group">
-              Self-Hosted Linux Home Server & Virtual Private Mesh
-              <span class="text-xs font-mono text-muted dark:text-darkMuted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-            </a>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">SysAdmin</span>
+        <!-- Project 1: Debian Home Lab -->
+        <article class="project-card pro-card rounded-2xl p-6 border border-border dark:border-darkBorder flex flex-col justify-between space-y-4 shadow-sm" data-category="infra">
+          <div class="space-y-3">
+            <div class="flex items-baseline justify-between">
+              <a href="https://github.com/rhit-Yoob/Home-Lab" target="_blank" class="text-lg sm:text-xl font-bold text-ink dark:text-white hover:underline flex items-center gap-1.5 group">
+                Self-Hosted Debian Home Lab
+                <span class="text-xs font-mono text-muted dark:text-darkMuted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+              </a>
+              <span class="text-xs font-mono text-muted dark:text-darkMuted">Bare Metal</span>
+            </div>
+            <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400 leading-relaxed">
+              Repurposed bare-metal hardware into a headless Debian 13 server. Diagnosed bad NVMe sectors with dmesg, bypassed UEFI boot restrictions, deployed Immich on Docker with persistent storage volumes, and configured secure encrypted remote management via a Tailscale mesh VPN without exposing open router ports.
+            </p>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
-            Provisioned a headless Debian Linux server on bare-metal hardware, configuring secure non-root user permissions, sudo privileges, and SSH key authentication. Deployed containerized services (Immich) via Docker with persistent storage and custom bridge networks. Built an encrypted peer-to-peer overlay network using Tailscale for remote administration without open public ports.
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-2">
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Debian 13</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Docker</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Tailscale</span>
@@ -258,39 +321,43 @@
           </div>
         </article>
 
-        <!-- KodeKloud -->
-        <article class="project-card tilt-card rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" data-category="infra">
-          <div class="flex items-baseline justify-between">
-            <a href="https://github.com/rhit-Yoob/KodeKloud-Cloud-Engineering-Project" target="_blank" class="text-[15px] font-medium text-ink dark:text-white hover:underline flex items-center gap-1 group">
-              Cloud & Infrastructure Automation Lab (KodeKloud)
-              <span class="text-xs font-mono text-muted dark:text-darkMuted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-            </a>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">Cloud/DevOps</span>
+        <!-- Project 2: KodeKloud -->
+        <article class="project-card pro-card rounded-2xl p-6 border border-border dark:border-darkBorder flex flex-col justify-between space-y-4 shadow-sm" data-category="infra">
+          <div class="space-y-3">
+            <div class="flex items-baseline justify-between">
+              <a href="https://github.com/rhit-Yoob/KodeKloud-Cloud-Engineering-Project" target="_blank" class="text-lg sm:text-xl font-bold text-ink dark:text-white hover:underline flex items-center gap-1.5 group">
+                Cloud Infrastructure & IaC Labs
+                <span class="text-xs font-mono text-muted dark:text-darkMuted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+              </a>
+              <span class="text-xs font-mono text-muted dark:text-darkMuted">Cloud & DevOps</span>
+            </div>
+            <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400 leading-relaxed">
+              Deployed 100+ cloud infrastructure environments across AWS and Azure using CloudFormation, ARM templates, and Bash. Configured isolated VPC/VNet peering, strict IAM/RBAC policies, and container orchestration across multi-node Kubernetes clusters.
+            </p>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
-            Deployed 100+ cloud infrastructure environments across AWS and Azure using CloudFormation, ARM, and Bash. Configured secure VPC/VNet peering, IAM/RBAC policies, and Kubernetes container orchestration.
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-2">
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">AWS</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Azure</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Kubernetes</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">CloudFormation</span>
+            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">IaC</span>
           </div>
         </article>
 
-        <!-- CD & Vinyl Tracker -->
-        <article class="project-card tilt-card rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" data-category="software">
-          <div class="flex items-baseline justify-between">
-            <span class="text-[15px] font-medium text-ink dark:text-white flex items-center gap-1.5">
-              CD and Vinyl Tracker System
-              <span class="text-[10px] font-mono uppercase bg-stone-100 dark:bg-slate-800 text-stone-500 px-1.5 py-0.5 rounded">WMHD Radio</span>
-            </span>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">Web Security</span>
+        <!-- Project 3: CD & Vinyl Tracker -->
+        <article class="project-card pro-card rounded-2xl p-6 border border-border dark:border-darkBorder flex flex-col justify-between space-y-4 shadow-sm" data-category="software">
+          <div class="space-y-3">
+            <div class="flex items-baseline justify-between">
+              <span class="text-lg sm:text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                CD & Vinyl Inventory System
+                <span class="text-[10px] font-mono uppercase bg-stone-200 dark:bg-slate-800 text-stone-600 dark:text-slate-400 px-2 py-0.5 rounded">WMHD Radio</span>
+              </span>
+              <span class="text-xs font-mono text-muted dark:text-darkMuted">Security</span>
+            </div>
+            <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400 leading-relaxed">
+              Database-backed catalog platform for WMHD Radio. Built parameterized SQL backend queries to protect endpoints against SQL injection vulnerabilities and established role-based access control to isolate admin privilege tiers from standard search users.
+            </p>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
-            Designed and built a database-backed catalog platform for WMHD Radio. Formulated parameterized backend queries to eliminate SQL injection vulnerabilities and established role-based access control to isolate administrative powers.
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-2">
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Python</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">SQL</span>
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">SQLi Defense</span>
@@ -298,95 +365,54 @@
           </div>
         </article>
 
-        <!-- Jetpack Joyride -->
-        <article class="project-card tilt-card rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder hover:border-stone-400 dark:hover:border-slate-500 shadow-sm" data-category="software">
-          <div class="flex items-baseline justify-between">
-            <span class="text-[15px] font-medium text-ink dark:text-white flex items-center gap-1.5">
-              Jetpack Joyride Arcade Engine
-              <span class="text-[10px] font-mono uppercase bg-stone-100 dark:bg-slate-800 text-stone-500 px-1.5 py-0.5 rounded">Academic</span>
-            </span>
-            <span class="text-xs font-mono text-muted dark:text-darkMuted">OOP / Java</span>
+        <!-- Project 4: Jetpack Arcade -->
+        <article class="project-card pro-card rounded-2xl p-6 border border-border dark:border-darkBorder flex flex-col justify-between space-y-4 shadow-sm" data-category="software">
+          <div class="space-y-3">
+            <div class="flex items-baseline justify-between">
+              <span class="text-lg sm:text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                Jetpack Arcade Engine
+                <span class="text-[10px] font-mono uppercase bg-stone-200 dark:bg-slate-800 text-stone-600 dark:text-slate-400 px-2 py-0.5 rounded">Academic</span>
+              </span>
+              <span class="text-xs font-mono text-muted dark:text-darkMuted">Java OOP</span>
+            </div>
+            <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400 leading-relaxed">
+              Desktop 2D side-scrolling arcade runner developed in Java. Built using core Object-Oriented Programming (OOP) paradigms with dynamic bounding-box collision detection routines, continuous frame tick timing loops, and sprite state rendering.
+            </p>
           </div>
-          <p class="text-xs text-stone-600 dark:text-slate-400 mt-2 leading-relaxed">
-            Desktop 2D side-scrolling arcade clone built using Object-Oriented Design patterns in Java. Engineered dynamic bounding-box collision detection routines, continuous frame tick timing, and sprite state rendering.
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono text-stone-600 dark:text-slate-400 pt-3">
+          <div class="flex flex-wrap gap-2 text-xs font-mono text-stone-600 dark:text-slate-400 pt-2">
             <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Java</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">OOP</span>
-            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Physics Engine</span>
+            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">OOP Patterns</span>
+            <span class="bg-chip dark:bg-darkBg px-2 py-0.5 rounded border border-border dark:border-darkBorder">Collision Engine</span>
           </div>
         </article>
 
       </div>
     </section>
 
-    <!-- Industry Certifications Section (Card Grid) -->
-    <section class="space-y-4">
-      <div class="flex items-baseline justify-between border-b border-border dark:border-darkBorder pb-2">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-muted dark:text-darkMuted">Certificates</h2>
-        <a href="https://github.com/rhit-Yoob/Certificates" target="_blank" class="text-xs font-mono text-muted dark:text-darkMuted hover:text-ink dark:hover:text-white transition">
-          repository ↗
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder flex items-center justify-between">
-          <div>
-            <div class="text-sm font-medium text-ink dark:text-white">CompTIA A+</div>
-            <div class="text-xs text-muted dark:text-darkMuted font-mono">Hardware break-fix & OS</div>
-          </div>
-          <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Active</span>
-        </div>
-
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder flex items-center justify-between">
-          <div>
-            <div class="text-sm font-medium text-ink dark:text-white">AWS Cloud Practitioner</div>
-            <div class="text-xs text-muted dark:text-darkMuted font-mono">CLF-C02 Certified</div>
-          </div>
-          <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Jan 2026</span>
-        </div>
-
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder flex items-center justify-between">
-          <div>
-            <div class="text-sm font-medium text-ink dark:text-white">Google Cybersecurity</div>
-            <div class="text-xs text-muted dark:text-darkMuted font-mono">SIEM, IDS & Defense</div>
-          </div>
-          <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Sep 2025</span>
-        </div>
-
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-amber-300/60 dark:border-amber-900/40 flex items-center justify-between">
-          <div>
-            <div class="text-sm font-medium text-ink dark:text-white">CompTIA Network+</div>
-            <div class="text-xs text-muted dark:text-darkMuted font-mono">Routing, Subnetting & OSI</div>
-          </div>
-          <span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900/50">In Progress</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Skills Matrix Bento -->
+    <!-- Technical Skills Matrix Bento -->
     <section class="space-y-4">
       <div class="border-b border-border dark:border-darkBorder pb-2">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-muted dark:text-darkMuted">Technical Stack</h2>
+        <h2 class="text-xs sm:text-sm font-mono uppercase tracking-widest text-muted dark:text-darkMuted font-semibold">Technical Skills & Environments</h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder space-y-1">
-          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[10px]">Cloud & Virtualization</span>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm">
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder space-y-1.5">
+          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[11px] font-semibold">Cloud & Virtualization</span>
           <p class="text-stone-700 dark:text-slate-300">AWS (EC2, S3, RDS, VPC, IAM), Azure (VMs, VNets, RBAC), VMware, Linux VMs (Debian, Ubuntu).</p>
         </div>
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder space-y-1">
-          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[10px]">DevOps & Containers</span>
+
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder space-y-1.5">
+          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[11px] font-semibold">DevOps & Containers</span>
           <p class="text-stone-700 dark:text-slate-300">Docker, Kubernetes, CloudFormation, ARM Templates, Git, CI/CD, Bash Scripting.</p>
         </div>
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder space-y-1">
-          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[10px]">Systems & Security</span>
-          <p class="text-stone-700 dark:text-slate-300">Linux Administration, Hardware Diagnostics, TCP/IP, Tailscale VPN, RBAC, Vulnerability Patching, SIEM Tools.</p>
+
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder space-y-1.5">
+          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[11px] font-semibold">Systems & Security</span>
+          <p class="text-stone-700 dark:text-slate-300">Linux Administration, Hardware Diagnostics, TCP/IP, Tailscale Mesh VPN, RBAC, SIEM Tools.</p>
         </div>
-        <div class="tilt-card rounded-xl p-4 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder space-y-1">
-          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[10px]">Languages & Databases</span>
+
+        <div class="pro-card rounded-2xl p-5 border border-border dark:border-darkBorder space-y-1.5">
+          <span class="font-mono text-muted dark:text-darkMuted block uppercase tracking-wider text-[11px] font-semibold">Languages & Databases</span>
           <p class="text-stone-700 dark:text-slate-300">Python, Bash, SQL (PostgreSQL), Java, C, JavaScript, HTML/CSS.</p>
         </div>
       </div>
@@ -395,27 +421,28 @@
     <!-- Education Section -->
     <section class="space-y-4">
       <div class="border-b border-border dark:border-darkBorder pb-2">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-muted dark:text-darkMuted">Education</h2>
+        <h2 class="text-xs sm:text-sm font-mono uppercase tracking-widest text-muted dark:text-darkMuted font-semibold">Education</h2>
       </div>
 
-      <div class="tilt-card rounded-xl p-5 bg-white/70 dark:bg-darkCard/70 border border-border dark:border-darkBorder space-y-2">
+      <div class="pro-card rounded-2xl p-6 sm:p-7 border border-border dark:border-darkBorder space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
           <div>
-            <div class="text-[15px] font-medium text-ink dark:text-white">Rose-Hulman Institute of Technology</div>
-            <div class="text-xs text-stone-600 dark:text-slate-400">B.S. in Computer Science, Minor in Cybersecurity (Dean’s List x2)</div>
+            <div class="text-lg sm:text-xl font-medium text-ink dark:text-white">Rose-Hulman Institute of Technology</div>
+            <div class="text-sm text-stone-600 dark:text-slate-400 mt-0.5">B.S. in Computer Science, Minor in Cybersecurity (Dean’s List x2)</div>
+            <div class="text-xs font-serif italic text-muted dark:text-darkMuted mt-0.5">Terre Haute, IN</div>
           </div>
-          <span class="text-xs font-mono text-muted dark:text-darkMuted">Sep 2023 – May 2027</span>
+          <span class="text-xs sm:text-sm font-mono text-muted dark:text-darkMuted">Sep 2023 – May 2027</span>
         </div>
-        <p class="text-xs text-stone-600 dark:text-slate-400 pt-1 border-t border-border/60 dark:border-darkBorder/60">
-          <span class="font-mono text-[10px] uppercase tracking-wider text-muted dark:text-darkMuted">Related Courses:</span> Operating Systems, Foundations of Cybersecurity, Practical Security, Database Systems, Computer Architecture, Cybercrime & Digital Forensics.
+        <p class="text-xs sm:text-sm text-stone-600 dark:text-slate-400 pt-2 border-t border-border/80 dark:border-darkBorder">
+          <span class="font-mono text-xs uppercase tracking-wider text-muted dark:text-darkMuted">Relevant Coursework:</span> Operating Systems, Foundations of Cybersecurity, Practical Security, Database Systems, Computer Architecture, Cybercrime & Digital Forensics.
         </p>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="pt-8 border-t border-border dark:border-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted dark:text-darkMuted">
-      <div>Brian Yoo — Built with GitHub Pages</div>
-      <div class="flex gap-4">
+    <footer class="pt-8 border-t border-border dark:border-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm font-mono text-muted dark:text-darkMuted">
+      <div>Brian Yoo — Hosted via GitHub Pages</div>
+      <div class="flex gap-5">
         <a href="https://github.com/rhit-Yoob" target="_blank" class="hover:text-ink dark:hover:text-white transition">github</a>
         <a href="https://www.linkedin.com/in/brian-yoo-422a2b288" target="_blank" class="hover:text-ink dark:hover:text-white transition">linkedin</a>
         <a href="mailto:iBrianyoo@gmail.com" class="hover:text-ink dark:hover:text-white transition">email</a>
@@ -424,7 +451,7 @@
 
   </main>
 
-  <!-- Interactive Logic -->
+  <!-- Interactive JavaScript Logic -->
   <script>
     // 1. Live Local Campus Clock (Eastern Time)
     function updateClock() {
@@ -442,7 +469,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. Light / Dark Mode Toggle with Memory
+    // 2. Light / Dark Mode Toggle with State Memory
     const themeBtn = document.getElementById('theme-toggle');
     const htmlEl = document.documentElement;
 
@@ -468,7 +495,7 @@
       applyTheme(!htmlEl.classList.contains('dark'));
     });
 
-    // 3. Project Filter Tabs with Transition Animations
+    // 3. Project Filter Tabs with Transition Timing
     function filterProjects(category) {
       const cards = document.querySelectorAll('.project-card');
       const buttons = document.querySelectorAll('.filter-btn');
@@ -495,7 +522,7 @@
       });
     }
 
-    // 4. Clickable Experience Accordions
+    // 4. Experience Accordion Drawers
     function toggleDrawer(drawerId) {
       const drawer = document.getElementById(drawerId);
       if (drawer) {
@@ -503,8 +530,8 @@
       }
     }
 
-    // 5. Interactive 3D Perspective Tilt on Mouse Movement
-    const cards = document.querySelectorAll('.tilt-card');
+    // 5. Dynamic 3D Perspective Tilt on Cards
+    const cards = document.querySelectorAll('.pro-card');
     cards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -512,8 +539,8 @@
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
+        const rotateX = ((y - centerY) / centerY) * -3.5;
+        const rotateY = ((x - centerX) / centerX) * 3.5;
 
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
       });
@@ -523,14 +550,14 @@
       });
     });
 
-    // 6. Copy Email with Confirmation State
+    // 6. Copy Email with Temporary Confirmation Feedback
     function copyEmail() {
       const email = 'iBrianyoo@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
         const label = document.getElementById('email-label');
-        label.textContent = 'copied!';
+        label.textContent = 'copied to clipboard!';
         setTimeout(() => {
-          label.textContent = 'email';
+          label.textContent = 'copy email';
         }, 2000);
       });
     }
